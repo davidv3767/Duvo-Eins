@@ -1,3 +1,5 @@
+# This is the MAIN file for the Duvo Eins program
+
 # Needed imports
 import pygame
 import sys
