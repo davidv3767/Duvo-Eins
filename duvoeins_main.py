@@ -6,7 +6,7 @@ import sys
 # Global constants
 WIDTH, HEIGHT = 0, 0
 
-# Initializes pygame, settings, and returns screen
+# Initializes pygame, setting s, and returns screen
 def init_game():
     # Pygame initialization
     global WIDTH, HEIGHT
@@ -15,7 +15,7 @@ def init_game():
     # Window size + display surface
     info = pygame.display.Info()
     WIDTH, HEIGHT = info.current_w, info.current_h
-    screen = pygame.display.set_mode((WIDTH, HEIGHT), pygame.FULLSCREEN)
+    screen = pygame.display.set_mode((WIDTH - 100, HEIGHT - 100))
     pygame.display.set_caption("Duvo Eins")
     # Returns screen
     return screen
@@ -132,44 +132,97 @@ def setup_selection1_assets():
     # Set up assets
     assets = {}
     # Set up player name graphics
-    playername_font = pygame.font.SysFont(None, 120)
-    assets['p1name_surface'] = playername_font.render("P1 Name: ", True, (255, 255, 255))
-    assets['p1name_rect'] = assets['p1name_surface'].get_rect(center=(WIDTH / 2, HEIGHT / 8 * 3))
-    assets['p2name_surface'] = playername_font.render("P2 Name: ", True, (255, 255, 255))
-    assets['p2name_rect'] = assets['p2name_surface'].get_rect(center=(WIDTH / 2, HEIGHT / 8 * 5))
+    assets['font'] = pygame.font.SysFont(None, 120)
+    assets['p1_box_rect'] = pygame.Rect(WIDTH / 4, HEIGHT / 8 * 3 - 60, WIDTH / 2, 120)
+    assets['p2_box_rect'] = pygame.Rect(WIDTH / 4, HEIGHT / 8 * 5 - 60, WIDTH / 2, 120)
     # Returns assets
     return assets
 
 # Handles visuals for first selection screen
-def draw_selection1(screen, assets):
-    screen.fill((40, 40, 40))
-    # Draws player name graphics
-    screen.blit(assets['p1name_surface'], assets['p1name_rect'])
-    screen.blit(assets['p2name_surface'], assets['p2name_rect'])
+def draw_selection1(screen, assets, p1_name, p2_name, active_box):
+    # Fill screen
+    screen.fill((100, 100, 100))
+    # Outline colors
+    if active_box == "p1":
+        p1_box_color = (255, 215, 0)
+        p2_box_color = (100, 100, 100)
+    elif active_box == "p2":
+        p1_box_color = (100, 100, 100)
+        p2_box_color = (255, 215, 0)
+    else:
+         p1_box_color = (100, 100, 100)
+         p2_box_color = (100, 100, 100)
+    # Draws visible input box
+    pygame.draw.rect(screen, p1_box_color, assets['p1_box_rect'], 4)
+    pygame.draw.rect(screen, p2_box_color, assets['p2_box_rect'], 4)
+    # Create temporary string variables that include the cursor for the active box
+    p1_display_text = f"P1 Name: {p1_name}"
+    p2_display_text = f"P2 Name: {p2_name}"
+    if active_box == "p1":
+        p1_display_text += "|"
+    else:
+        p2_display_text += "|"
+
+    # Render temporary display strings instead of raw variables:
+    p1_surface = assets['font'].render(p1_display_text, True, (255, 255, 255))
+    p1_rect = p1_surface.get_rect(center=assets['p1_box_rect'].center)
+    
+    p2_surface = assets['font'].render(p2_display_text, True, (255, 255, 255))
+    p2_rect = p2_surface.get_rect(center=assets['p2_box_rect'].center)
+
+    # Draws elemnts
+    screen.blit(p1_surface, p1_rect)
+    screen.blit(p2_surface, p2_rect)
     pygame.display.flip()
 
 # Processes player inputs at info screen
-def handle_selection1_events(active_box):
+def handle_selection1_events(p1_name, p2_name, active_box):
     for event in pygame.event.get():
         # Quits game
         if event.type == pygame.QUIT:
-            return "quit"
+            return "quit", p1_name, p2_name, "p1"
         elif event.type == pygame.KEYDOWN:
             # Also quits game
             if event.key == pygame.K_ESCAPE:
-                return "quit"
-            # Returns to menu page
+                return "quit", p1_name, p2_name, "p1"
             elif event.key == pygame.K_TAB:
-                # Going back to menu page/p1 box
-                print("tab s1")
+                if active_box == "p2":
+                    active_box = "p1"
+                else:
+                    return "menu", p1_name, p2_name, "p1"
             elif event.key == pygame.K_BACKSPACE:
-                # Delete last character
-                print("back s1")
+                if active_box == "p1":
+                    p1_name = p1_name[:-1]
+                else:
+                    p2_name = p2_name[:-1]
+            elif event.key == pygame.K_RETURN:
+                if active_box == "p1":
+                    active_box = "p2"
+                else:
+                    return "selection2", p1_name, p2_name, "p2"
             else:
                 if event.unicode.isprintable() and len(event.unicode) > 0:
-                    print("add s1")
+                    if active_box == "p1" and len(p1_name) < 15:
+                        p1_name += event.unicode
+                    elif active_box == "p2" and len(p2_name) < 15:
+                        p2_name += event.unicode
     # If nothing is returned, stay on first selection page               
-    return "selection1"
+    return "selection1", p1_name, p2_name, active_box
+
+# Defines Line class
+class Line:
+    def __init__(self, start, end, color, width=1):
+        self.start = start
+        self.end = end
+        self.color = color
+        self.width = width
+
+    def draw(self, surface):
+        pygame.draw.line(surface, self.color, self.start, self.end, self.width)
+
+# Initializes and returns all items needed for second selection screen
+def setup_selection2_assets():
+    print("Coming soon!")
 
 # Main execution function
 def main():
@@ -194,8 +247,8 @@ def main():
             draw_info(screen, info_assets)
             current_state = handle_info_events()
         elif current_state == "selection1":
-            draw_selection1(screen, selection1_assets)
-            current_state = handle_selection1_events(active_box)
+            draw_selection1(screen, selection1_assets, p1_name, p2_name, active_box)
+            current_state, p1_name, p2_name, active_box = handle_selection1_events(p1_name, p2_name, active_box)
         clock.tick(60)
     # End mechanic
     pygame.quit()
