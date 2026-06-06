@@ -110,8 +110,9 @@ def handle_selection1_events(p1_name, p2_name, active_box):
 def setup_selection2_assets(WIDTH, HEIGHT, MID_X, MID_Y):
     GRID_COLOR = (255, 255, 255)
     BORDER_PAD = 100
-    START_X = (WIDTH - (HEIGHT - (2 * BORDER_PAD))) / 2
-    END_X = START_X + (HEIGHT - (2 * BORDER_PAD))
+    GRID_SIZE = HEIGHT - (2 * BORDER_PAD)
+    START_X = (WIDTH / 4) - (GRID_SIZE / 2)
+    END_X = (WIDTH / 4) + (GRID_SIZE / 2)
     assets = {}
     
     assets['lines'] = [
@@ -119,16 +120,19 @@ def setup_selection2_assets(WIDTH, HEIGHT, MID_X, MID_Y):
         Line((START_X, HEIGHT - BORDER_PAD), (END_X, HEIGHT - BORDER_PAD), GRID_COLOR, 8),
         Line((START_X, BORDER_PAD), (START_X, HEIGHT - BORDER_PAD), GRID_COLOR, 8),
         Line((END_X, BORDER_PAD), (END_X, HEIGHT - BORDER_PAD), GRID_COLOR, 8),
-        Line((MID_X, BORDER_PAD), (MID_X, HEIGHT - BORDER_PAD), GRID_COLOR, 6),
+        Line((WIDTH / 4, BORDER_PAD), (WIDTH / 4, HEIGHT - BORDER_PAD), GRID_COLOR, 6),
         Line((START_X, MID_Y), (END_X, MID_Y), GRID_COLOR, 6)
     ]
     
     assets['circles'] = [
-        StaticCircle((MID_X - ((HEIGHT - (2 * BORDER_PAD)) / 4), MID_Y - ((HEIGHT - (2 * BORDER_PAD)) / 4)), 100, (215, 25, 28)),
-        StaticCircle((MID_X + ((HEIGHT - (2 * BORDER_PAD)) / 4), MID_Y - ((HEIGHT - (2 * BORDER_PAD)) / 4)), 100, (245, 210, 0)),
-        StaticCircle((MID_X - ((HEIGHT - (2 * BORDER_PAD)) / 4), MID_Y + ((HEIGHT - (2 * BORDER_PAD)) / 4)), 100, (0, 130, 80)),
-        StaticCircle((MID_X + ((HEIGHT - (2 * BORDER_PAD)) / 4), MID_Y + ((HEIGHT - (2 * BORDER_PAD)) / 4)), 100, (15, 85, 215))
+        StaticCircle((WIDTH / 4 - GRID_SIZE / 4, MID_Y - GRID_SIZE / 4), 100, (215, 25, 28)),
+        StaticCircle((WIDTH / 4 + GRID_SIZE / 4, MID_Y - GRID_SIZE / 4), 100, (245, 210, 0)),
+        StaticCircle((WIDTH / 4 - GRID_SIZE / 4, MID_Y + GRID_SIZE / 4), 100, (0, 130, 80)),
+        StaticCircle((WIDTH / 4 + GRID_SIZE / 4, MID_Y + GRID_SIZE / 4), 100, (15, 85, 215))
     ]
+
+    assets['stats_background'] = pygame.Rect(MID_X + BORDER_PAD, HEIGHT / 4, MID_X - (2 * BORDER_PAD), MID_Y)
+
     return assets
 
 # Handles visuals for second selection screen
@@ -138,6 +142,7 @@ def draw_selection2(screen, assets):
         line.draw(screen)
     for circle in assets['circles']:
         circle.draw(screen)
+    pygame.draw.rect(screen, (245, 230, 222), assets['stats_background'])
     pygame.display.flip()
 
 # Processes player inputs at second selection screen

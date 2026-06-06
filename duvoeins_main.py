@@ -18,7 +18,6 @@ def init_game():
     info_obj = pygame.display.Info()
     WIDTH, HEIGHT = info_obj.current_w, info_obj.current_h
     MID_X, MID_Y = WIDTH / 2, HEIGHT / 2
-    
     screen = pygame.display.set_mode((WIDTH, HEIGHT), pygame.FULLSCREEN)
     pygame.display.set_caption("Duvo Eins")
     return screen
