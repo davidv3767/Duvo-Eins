@@ -108,13 +108,14 @@ def handle_selection1_events(p1_name, p2_name, active_box):
 
 # Initializes and returns all items needed for second selection screen
 def setup_selection2_assets(WIDTH, HEIGHT, MID_X, MID_Y):
+    # Variables needed
     GRID_COLOR = (255, 255, 255)
     BORDER_PAD = 100
     GRID_SIZE = HEIGHT - (2 * BORDER_PAD)
     START_X = (WIDTH / 4) - (GRID_SIZE / 2)
     END_X = (WIDTH / 4) + (GRID_SIZE / 2)
     assets = {}
-    
+    # Initialize lines
     assets['lines'] = [
         Line((START_X, BORDER_PAD), (END_X, BORDER_PAD), GRID_COLOR, 8),
         Line((START_X, HEIGHT - BORDER_PAD), (END_X, HEIGHT - BORDER_PAD), GRID_COLOR, 8),
@@ -123,36 +124,72 @@ def setup_selection2_assets(WIDTH, HEIGHT, MID_X, MID_Y):
         Line((WIDTH / 4, BORDER_PAD), (WIDTH / 4, HEIGHT - BORDER_PAD), GRID_COLOR, 6),
         Line((START_X, MID_Y), (END_X, MID_Y), GRID_COLOR, 6)
     ]
-    
+    # Initialize circles
     assets['circles'] = [
         StaticCircle((WIDTH / 4 - GRID_SIZE / 4, MID_Y - GRID_SIZE / 4), 100, (215, 25, 28)),
         StaticCircle((WIDTH / 4 + GRID_SIZE / 4, MID_Y - GRID_SIZE / 4), 100, (245, 210, 0)),
         StaticCircle((WIDTH / 4 - GRID_SIZE / 4, MID_Y + GRID_SIZE / 4), 100, (0, 130, 80)),
         StaticCircle((WIDTH / 4 + GRID_SIZE / 4, MID_Y + GRID_SIZE / 4), 100, (15, 85, 215))
     ]
-
+    # Initialize stats graphic
     assets['stats_background'] = pygame.Rect(MID_X + BORDER_PAD, HEIGHT / 4, MID_X - (2 * BORDER_PAD), MID_Y)
-
+    assets['stats_font'] = pygame.font.SysFont(None, 60)
+    # Initialize stats data
+    assets['elements_data'] = {
+        "1": {"color": "Red", "strong": "Yellow", "weak": "Blue"},
+        "2": {"color": "Yellow", "strong": "Green", "weak": "Red"},
+        "3": {"color": "Green", "strong": "Blue", "weak": "Yellow"},
+        "4": {"color": "Blue", "strong": "Red", "weak": "Green"},
+        "none": {"color": "Press 1-4 to See", "strong": "Press 1-4 to See", "weak": "Press 1-4 to See"}
+    }
+    assets['current_data'] = "none"
+    # Returns assets
     return assets
 
 # Handles visuals for second selection screen
 def draw_selection2(screen, assets):
     screen.fill((40, 40, 40))
+    # Create grid lines
     for line in assets['lines']:
         line.draw(screen)
+    # Create lines
     for circle in assets['circles']:
         circle.draw(screen)
+    # Create stats (multi-step process) 
     pygame.draw.rect(screen, (245, 230, 222), assets['stats_background'])
+    # Initialize what's neccessary
+    TEXT_FONT = assets['stats_font']
+    CURRENT_KEY = assets['current_data']
+    ACTIVE_ELEMENT = assets['elements_data'][CURRENT_KEY]
+    # Prepare surfaces & position
+    COLOR_SURFACE = TEXT_FONT.render(f"Color: {ACTIVE_ELEMENT['color']}", True, (30, 30, 30))
+    STRENGTH_SURFACE = TEXT_FONT.render(f"Strong Against: {ACTIVE_ELEMENT['strong']}", True, (30, 30, 30))
+    WEAK_SURFACE = TEXT_FONT.render(f"Weak To: {ACTIVE_ELEMENT['weak']}", True, (30, 30, 30))
+    FIRST_X = assets['stats_background'].x + 40
+    FIRST_Y = assets['stats_background'].y + 50
+    LINE_SPACING = 200
+    # Draw to screen
+    screen.blit(COLOR_SURFACE, (FIRST_X, FIRST_Y))
+    screen.blit(STRENGTH_SURFACE, (FIRST_X, FIRST_Y + LINE_SPACING))
+    screen.blit(WEAK_SURFACE, (FIRST_X, FIRST_Y + (LINE_SPACING * 2)))
     pygame.display.flip()
 
 # Processes player inputs at second selection screen
-def handle_selection2_events():
+def handle_selection2_events(assets):
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            return "quit"
+            return "quit", assets
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
-                return "quit"
+                return "quit", assets
             elif event.key == pygame.K_TAB:
-                return "selection1"
-    return "selection2"
+                return "selection1", assets
+            elif event.key == pygame.K_1:
+                assets['current_data'] = "1"
+            elif event.key == pygame.K_2:
+                assets['current_data'] = "2"
+            elif event.key == pygame.K_3:
+                assets['current_data'] = "3"
+            elif event.key == pygame.K_4:
+                assets['current_data'] = "4"
+    return "selection2", assets

@@ -10,6 +10,7 @@ import duvoeins_selection
 WIDTH, HEIGHT = 0, 0
 MID_X, MID_Y = 0, 0
 
+# Initializes what's neccessary
 def init_game():
     global WIDTH, HEIGHT, MID_X, MID_Y
     pygame.init()
@@ -23,9 +24,8 @@ def init_game():
     return screen
 
 def main():
+    # Input
     screen = init_game()
-    
-    # Setup state assets using calculated resolution mappings
     menu_assets = duvoeins_menu.setup_menu_assets(WIDTH, HEIGHT, MID_X)
     info_assets = duvoeins_info.setup_info_assets(WIDTH, HEIGHT, MID_X, MID_Y)
     selection1_assets = duvoeins_selection.setup_selection1_assets(WIDTH, HEIGHT, MID_X)
@@ -55,7 +55,7 @@ def main():
             
         elif current_state == "selection2":
             duvoeins_selection.draw_selection2(screen, selection2_assets)
-            current_state = duvoeins_selection.handle_selection2_events()
+            current_state, selection2_assets = duvoeins_selection.handle_selection2_events(selection2_assets)
             
         clock.tick(60)
         
