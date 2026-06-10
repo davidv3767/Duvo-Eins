@@ -1,7 +1,7 @@
 import pygame
 
 # Initializes and returns all items needed for menu screen
-def setup_menu_assets(WIDTH, HEIGHT, MID_X):
+def setup_menu_assets(WIDTH, HEIGHT, MID_X, MID_Y):
     assets = {}
     
     # Title Setup

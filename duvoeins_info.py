@@ -8,16 +8,13 @@ def setup_info_assets(WIDTH, HEIGHT, MID_X, MID_Y):
     title_font = pygame.font.SysFont("showcardgothic", 150)
     assets['title_surface'] = title_font.render("Information", True, (255, 255, 255))
     assets['title_rect'] = assets['title_surface'].get_rect(center=(MID_X, HEIGHT / 4))
-    
     # Version & Credits Setup
     version_font = pygame.font.SysFont(None, 75)
     assets['version_surface'] = version_font.render("Version: 0.1.3", True, (255, 255, 255))
     assets['version_rect'] = assets['version_surface'].get_rect(center=(WIDTH / 4, MID_Y))
-    
     maindev_font = pygame.font.SysFont(None, 75)
     assets['maindev_surface'] = maindev_font.render("Made by David Vuddandam ", True, (255, 255, 255))
     assets['maindev_rect'] = assets['maindev_surface'].get_rect(center=(WIDTH / 4, HEIGHT / 8 * 5))
-    
     # Instructions Setup
     instrtitle_font = pygame.font.SysFont(None, 125)
     assets['instrtitle_surface'] = instrtitle_font.render("Instructions", True, (255, 255, 255))
@@ -40,11 +37,14 @@ def draw_info(screen, assets):
 # Processes player inputs at info screen
 def handle_info_events():
     for event in pygame.event.get():
+        # Quits game
         if event.type == pygame.QUIT:
             return "quit"
         elif event.type == pygame.KEYDOWN:
+            # Also quits game
             if event.key == pygame.K_ESCAPE:
                 return "quit"
+            # Returns to menu screen
             elif event.key == pygame.K_TAB:
                 return "menu"
     return "info"

@@ -7,7 +7,6 @@ class Line:
         self.end = end
         self.color = color
         self.width = width
-
     def draw(self, surface):
         pygame.draw.line(surface, self.color, self.start, self.end, self.width)
 
@@ -18,22 +17,25 @@ class StaticCircle:
         self.radius = radius
         self.color = color 
         self.width = width
-
     def draw(self, surface):
         pygame.draw.circle(surface, self.color, self.center, self.radius, self.width)
 
 # Initializes and returns all items needed for first selection screen
-def setup_selection1_assets(WIDTH, HEIGHT, MID_X):
+def setup_selection1_assets(WIDTH, HEIGHT, MID_X, MID_Y):
+    # Setup assets
     assets = {}
+    # Setup font
     assets['font'] = pygame.font.SysFont(None, 120)
+    # Sets rectangles for text
     assets['p1_box_rect'] = pygame.Rect(WIDTH / 4, HEIGHT / 8 * 3 - 120, MID_X, 120)
     assets['p2_box_rect'] = pygame.Rect(WIDTH / 4, HEIGHT / 8 * 5 - 120, MID_X, 120)
+    # Returns assets
     return assets
 
 # Handles visuals for first selection screen
 def draw_selection1(screen, assets, p1_name, p2_name, active_box):
     screen.fill((100, 100, 100))
-    
+    # Draws active boxes
     if active_box == "p1":
         p1_box_color = (255, 215, 0)
         p2_box_color = (100, 100, 100)
@@ -42,24 +44,22 @@ def draw_selection1(screen, assets, p1_name, p2_name, active_box):
         p2_box_color = (255, 215, 0)
     else:
         p1_box_color = (100, 100, 100)
-        p2_box_color = (100, 100, 100)
-        
+        p2_box_color = (100, 100, 100)    
     pygame.draw.rect(screen, p1_box_color, assets['p1_box_rect'], 4)
     pygame.draw.rect(screen, p2_box_color, assets['p2_box_rect'], 4)
-    
+    # Creates text for test graphics
     p1_display_text = f"P1 Name: {p1_name}"
     p2_display_text = f"P2 Name: {p2_name}"
     if active_box == "p1":
         p1_display_text += "|"
     else:
         p2_display_text += "|"
-
+    # Initializes text graphics
     p1_surface = assets['font'].render(p1_display_text, True, (255, 255, 255))
     p1_rect = p1_surface.get_rect(center=assets['p1_box_rect'].center)
-    
     p2_surface = assets['font'].render(p2_display_text, True, (255, 255, 255))
     p2_rect = p2_surface.get_rect(center=assets['p2_box_rect'].center)
-
+    # Draws text graphics
     screen.blit(p1_surface, p1_rect)
     screen.blit(p2_surface, p2_rect)
     pygame.display.flip()
@@ -143,6 +143,16 @@ def setup_selection2_assets(WIDTH, HEIGHT, MID_X, MID_Y):
         "none": {"color": "Press 1-4 to See", "strong": "Press 1-4 to See", "weak": "Press 1-4 to See"}
     }
     assets['current_data'] = "none"
+    # Key tracker
+    assets['key_tracker'] = {
+        "1": [0, 0],
+        "2": [0, 0],
+        "3": [0, 0],
+        "4": [0, 0]
+    }
+    assets['current_chooser'] = "Player 1"
+    assets['width'] = WIDTH
+    assets['height'] = HEIGHT
     # Returns assets
     return assets
 
@@ -168,28 +178,77 @@ def draw_selection2(screen, assets):
     FIRST_X = assets['stats_background'].x + 40
     FIRST_Y = assets['stats_background'].y + 50
     LINE_SPACING = 200
+    # Create player num
+    PLAYER_SURFACE = TEXT_FONT.render(assets['current_chooser'], True, (255, 255, 255))
     # Draw to screen
     screen.blit(COLOR_SURFACE, (FIRST_X, FIRST_Y))
     screen.blit(STRENGTH_SURFACE, (FIRST_X, FIRST_Y + LINE_SPACING))
     screen.blit(WEAK_SURFACE, (FIRST_X, FIRST_Y + (LINE_SPACING * 2)))
+    screen.blit(PLAYER_SURFACE, (assets['width'] - 300, 100))
     pygame.display.flip()
 
 # Processes player inputs at second selection screen
-def handle_selection2_events(assets):
+def handle_selection2_events(assets, PRESSED_KEY, p1_info, p2_info):
+    # Input time for triple click
+    CURRENT_TIME = pygame.time.get_ticks()
+    TRIPLE_CLICK_THRESHOLD = 500
     for event in pygame.event.get():
+        # Quits game
         if event.type == pygame.QUIT:
-            return "quit", assets
-        elif event.type == pygame.KEYDOWN:
+            return "quit", assets, None, p1_info, p2_info
+        elif event.type == pygame.KEYDOWN:   
+            # Also quits game
             if event.key == pygame.K_ESCAPE:
-                return "quit", assets
+                return "quit", assets, None, p1_info, p2_info
+            # Returns to first selection screen
             elif event.key == pygame.K_TAB:
-                return "selection1", assets
+                return "selection1", assets, None, p1_info, p2_info
+            # Character data/selection keys
             elif event.key == pygame.K_1:
-                assets['current_data'] = "1"
+                PRESSED_KEY = "1"
             elif event.key == pygame.K_2:
-                assets['current_data'] = "2"
+                PRESSED_KEY = "2"
             elif event.key == pygame.K_3:
-                assets['current_data'] = "3"
+                PRESSED_KEY = "3"
             elif event.key == pygame.K_4:
-                assets['current_data'] = "4"
-    return "selection2", assets
+                PRESSED_KEY = "4"
+            # If character data/selection keys are pressed
+            if PRESSED_KEY:
+                # Show character data
+                assets['current_data'] = PRESSED_KEY
+                # Creates needed variables
+                COUNT, LAST_PRESS_TIME = assets['key_tracker'][PRESSED_KEY]
+                # Reset/add to count based on duration between clicks
+                if CURRENT_TIME - LAST_PRESS_TIME > TRIPLE_CLICK_THRESHOLD:
+                    COUNT = 1
+                else:
+                    COUNT += 1
+                # Update tracker data
+                assets['key_tracker'][PRESSED_KEY] = [COUNT, CURRENT_TIME]
+                # Confirm seleciton if triple-tap
+                if COUNT >= 3:
+                    assets['key_tracker'][PRESSED_KEY][0] = 0
+                    if p1_info[2] == False:
+                        if PRESSED_KEY == 1:
+                            p1_info[1] = "red"
+                        elif PRESSED_KEY == 2:
+                            p1_info[1] = "yellow"
+                        elif PRESSED_KEY == 3:
+                            p1_info[1] = "green"
+                        elif PRESSED_KEY == 4:
+                            p1_info[1] = "blue"
+                        p1_info[2] = True
+                        assets['current_chooser'] = "Player 2"
+                    elif p2_info[2] == False:
+                        if PRESSED_KEY == 1:
+                            p2_info[1] = "red"
+                        elif PRESSED_KEY == 2:
+                            p2_info[1] = "yellow"
+                        elif PRESSED_KEY == 3:
+                            p2_info[1] = "green"
+                        elif PRESSED_KEY == 4:
+                            p2_info[1] = "blue"
+                        p2_info[2] = True
+                        return "gameplay", assets, None, p1_info, p2_info
+    # Return default for 2nd selections screen
+    return "selection2", assets, None, p1_info, p2_info
