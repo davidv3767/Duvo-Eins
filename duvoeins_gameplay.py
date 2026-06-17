@@ -1,4 +1,7 @@
+# Needed imports
 import pygame
+import random
+import json
 
 # Defines character class
 class Character:
@@ -18,7 +21,15 @@ class Character:
 def setup_gameplay_assets(WIDTH, HEIGHT, MID_X, MID_Y):
     # Setup assets
     assets = {}
-    # How do I setup questions?
+    assets["current_level"] = 1
+    # Import questions
+    
+    # Function to pick questions
+    def get_new_question(level):
+        lvl_str = str(level)
+        if lvl_str not in assets["level_questions"]:
+            lvl_str = 1
+            return random.choice(assets["level_questions"][lvl_str])
     # Returns assets
     return assets
 

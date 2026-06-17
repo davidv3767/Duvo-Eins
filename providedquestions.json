@@ -1,0 +1,110 @@
+{
+    "K": [
+        {
+            "question": "Count the stars: ⭐⭐⭐⭐. How many are there?",
+            "choices": ["2", "4", "5", "3"],
+            "answer": "2"
+        },
+        {
+            "question": "Which shape has 3 sides and 3 corners?",
+            "choices": ["circle", "square", "triangle", "rectangle"],
+            "answer": "3"
+        }
+    ],
+    "1": [
+        {
+            "question": "What is 7 + 5?",
+            "choices": ["11", "13", "10", "12"],
+            "answer": "4"
+        },
+        {
+            "question": "What number comes next in the pattern? 5, 10, 15, 20, ___",
+            "choices": ["21", "25", "30", "22"],
+            "answer": "2"
+        }
+    ],
+    "2": [
+        {
+            "question": "What is the value of 3 dimes and 2 nickels?",
+            "choices": ["40 cents", "35 cents", "50 cents", "45 cents"],
+            "answer": "1"
+        },
+        {
+            "question": "Which number has a 5 in the tens place?",
+            "choices": ["523", "358", "235", "500"],
+            "answer": "2"
+        }
+    ],
+    "3": [
+        {
+            "question": "What is 6 times 8?",
+            "choices": ["42", "54", "48", "36"],
+            "answer": "3" 
+        },
+        {
+            "question": "What fraction of the circle is shaded if it is split into 4 equal parts and 1 part is colored in?",
+            "choices": ["1/4", "1/2", "3/4", "4/1"],
+            "answer": "1" 
+        }
+    ],
+    "4": [
+        {
+            "question": "Which of these numbers is a prime number?",
+            "choices": ["9", "15", "11", "21"],
+            "answer": "3" 
+        },
+        {
+            "question": "Find the perimeter of a rectangle with a length of 8 cm and a width of 5 cm.",
+            "choices": ["40 cm", "26 cm", "13 cm", "20 cm"],
+            "answer": "1"  
+        }
+    ],
+    "5": [
+        {
+            "question": "What is 3.5 * 4?",
+            "choices": ["12.5", "14.0", "15.2", "16.0"],
+            "answer": "3"  
+        },
+        {
+            "question": "Solve: 1/2 + 1/4",
+            "choices": ["2/6", "2/4", "3/4", "1/8"],
+            "answer": "3" 
+        }
+    ],
+    "6": [
+        {
+            "question": "What is the ratio of apples to bananas if there are 6 apples and 9 bananas in simplest form?",
+            "choices": ["2:3", "3:2", "6:9", "1:3"],
+            "answer": "1"  
+        },
+        {
+            "question": "Evaulate: 3^3 - (5+2)",
+            "choices": ["2", "16", "22", "20"],
+            "answer": "4" 
+        }
+    ],
+    "7": [
+        {
+            "question": "A jacket costs $40. It is on sale for 20% off. What is the sale price?",
+            "choices": ["$8", "$32", "$30", "$36"],
+            "answer": "2"  
+        },
+        {
+            "question": "Solve for x: 3x - 7 = 14",
+            "choices": ["x = 7", "x = 3", "x = 21", "x = 6"],
+            "answer": "1" 
+        }
+    ],
+    "8": [
+        {
+            "question": "What is the value of sqrt(64)?",
+            "choices": ["6", "7", "8", "9"],
+            "answer": "3"  
+        },
+        {
+            "question": "According to the Pythagorean theorem, if a right triangle has legs of length 3 cm and 4 cm, what is the length of the hypotenuse?",
+            "choices": ["5 cm", "7 cm", "12 cm", "25 cm"],
+            "answer": "1" 
+        }
+    ]
+}
