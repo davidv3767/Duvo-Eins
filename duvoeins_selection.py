@@ -159,10 +159,9 @@ def setup_selection2_assets(WIDTH, HEIGHT, MID_X, MID_Y):
 # Handles visuals for second selection screen
 def draw_selection2(screen, assets):
     screen.fill((40, 40, 40))
-    # Create grid lines
+    # Create grid lines & circles
     for line in assets['lines']:
         line.draw(screen)
-    # Create lines
     for circle in assets['circles']:
         circle.draw(screen)
     # Create stats (multi-step process) 
@@ -229,24 +228,24 @@ def handle_selection2_events(assets, PRESSED_KEY, p1_info, p2_info):
                 if COUNT >= 3:
                     assets['key_tracker'][PRESSED_KEY][0] = 0
                     if p1_info[2] == False:
-                        if PRESSED_KEY == 1:
+                        if PRESSED_KEY == "1":
                             p1_info[1] = "red"
-                        elif PRESSED_KEY == 2:
+                        elif PRESSED_KEY == "2":
                             p1_info[1] = "yellow"
-                        elif PRESSED_KEY == 3:
+                        elif PRESSED_KEY == "3":
                             p1_info[1] = "green"
-                        elif PRESSED_KEY == 4:
+                        elif PRESSED_KEY == "4":
                             p1_info[1] = "blue"
                         p1_info[2] = True
                         assets['current_chooser'] = "Player 2"
                     elif p2_info[2] == False:
-                        if PRESSED_KEY == 1:
+                        if PRESSED_KEY == "1":
                             p2_info[1] = "red"
-                        elif PRESSED_KEY == 2:
+                        elif PRESSED_KEY == "2":
                             p2_info[1] = "yellow"
-                        elif PRESSED_KEY == 3:
+                        elif PRESSED_KEY == "3":
                             p2_info[1] = "green"
-                        elif PRESSED_KEY == 4:
+                        elif PRESSED_KEY == "4":
                             p2_info[1] = "blue"
                         p2_info[2] = True
                         return "gameplay", assets, None, p1_info, p2_info

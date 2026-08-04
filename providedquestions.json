@@ -9,6 +9,11 @@
             "question": "Which shape has 3 sides and 3 corners?",
             "choices": ["circle", "square", "triangle", "rectangle"],
             "answer": "3"
+        },
+        {
+            "question": "Which shape has 4 sides and 4 corners?",
+            "choices": ["circle", "pentagon", "triangle", "rectangle"],
+            "answer": "4"
         }
     ],
     "1": [
@@ -45,6 +50,11 @@
             "question": "What fraction of the circle is shaded if it is split into 4 equal parts and 1 part is colored in?",
             "choices": ["1/4", "1/2", "3/4", "4/1"],
             "answer": "1" 
+        },
+        {
+            "question": "What is 3 times 5?",
+            "choices": ["23", "63", "18", "15"],
+            "answer": "4" 
         }
     ],
     "4": [
@@ -93,6 +103,11 @@
             "question": "Solve for x: 3x - 7 = 14",
             "choices": ["x = 7", "x = 3", "x = 21", "x = 6"],
             "answer": "1" 
+        },
+        {
+            "question": "Solve for y: 14y - 1 = 13",
+            "choices": ["y = 1", "y = 2", "y = 3", "y = 4"],
+            "answer": "1"
         }
     ],
     "8": [

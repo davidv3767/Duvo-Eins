@@ -27,13 +27,6 @@ def init_game():
     return screen
 
 def main():
-    # Input from other functions
-    screen = init_game()
-    menu_assets = duvoeins_menu.setup_menu_assets(WIDTH, HEIGHT, MID_X, MID_Y)
-    info_assets = duvoeins_info.setup_info_assets(WIDTH, HEIGHT, MID_X, MID_Y)
-    selection1_assets = duvoeins_selection.setup_selection1_assets(WIDTH, HEIGHT, MID_X, MID_Y)
-    selection2_assets = duvoeins_selection.setup_selection2_assets(WIDTH, HEIGHT, MID_X, MID_Y)
-    gameplay_assets = duvoeins_gameplay.setup_gameplay_assets(WIDTH, HEIGHT, MID_X, MID_Y)
     # Setup clock & current state
     clock = pygame.time.Clock()
     current_state = "menu"
@@ -44,7 +37,14 @@ def main():
     selection2_key_pressed = None
     p1_info = [p1_name, None, False]
     p2_info = [p2_name, None, False]
-    # Main game Loop
+    # Input from other functions
+    screen = init_game()
+    menu_assets = duvoeins_menu.setup_menu_assets(WIDTH, HEIGHT, MID_X, MID_Y)
+    info_assets = duvoeins_info.setup_info_assets(WIDTH, HEIGHT, MID_X, MID_Y)
+    selection1_assets = duvoeins_selection.setup_selection1_assets(WIDTH, HEIGHT, MID_X, MID_Y)
+    selection2_assets = duvoeins_selection.setup_selection2_assets(WIDTH, HEIGHT, MID_X, MID_Y)
+    gameplay_assets = duvoeins_gameplay.setup_gameplay_assets(WIDTH, HEIGHT, MID_X, MID_Y, p1_info, p2_info)
+    # Main game loop
     while current_state != "quit":
         if current_state == "menu":
             duvoeins_menu.draw_menu(screen, menu_assets)
@@ -63,6 +63,7 @@ def main():
             current_state, selection2_assets, selection2_key_pressed, p1_info, p2_info = duvoeins_selection.handle_selection2_events(selection2_assets, selection2_key_pressed, p1_info, p2_info)
         # Gameplay screen
         elif current_state == "gameplay":
+            gameplay_assets = duvoeins_gameplay.setup_gameplay_assets(WIDTH, HEIGHT, MID_X, MID_Y, p1_info, p2_info)
             duvoeins_gameplay.draw_gameplay(screen, gameplay_assets)
             current_state = duvoeins_gameplay.handle_gameplay_events()
         # Limit tick rate to 60 fps
