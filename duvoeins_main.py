@@ -6,6 +6,7 @@ import duvoeins_menu
 import duvoeins_info
 import duvoeins_selection
 import duvoeins_gameplay
+import duvoeins_settings
 
 # Global constants (Populated dynamically during runtime)
 WIDTH, HEIGHT = 0, 0
@@ -59,12 +60,14 @@ def main():
             current_state, p1_name, p2_name, active_box = duvoeins_selection.handle_selection1_events(p1_name, p2_name, active_box)
         # 2nd selection screen
         elif current_state == "selection2":
+            p1_info[0] = p1_name
+            p2_info[0] = p2_name
             duvoeins_selection.draw_selection2(screen, selection2_assets)
             current_state, selection2_assets, selection2_key_pressed, p1_info, p2_info = duvoeins_selection.handle_selection2_events(selection2_assets, selection2_key_pressed, p1_info, p2_info)
         # Gameplay screen
         elif current_state == "gameplay":
             gameplay_assets = duvoeins_gameplay.setup_gameplay_assets(WIDTH, HEIGHT, MID_X, MID_Y, p1_info, p2_info)
-            duvoeins_gameplay.draw_gameplay(screen, gameplay_assets)
+            duvoeins_gameplay.draw_gameplay(screen, gameplay_assets, WIDTH, HEIGHT)
             current_state = duvoeins_gameplay.handle_gameplay_events()
         # Limit tick rate to 60 fps
         clock.tick(60)

@@ -23,8 +23,23 @@ class Character:
         self.width = 0
         self.health = 100
         self.maxHealth = 100
-    def draw(self, surface):
+        self.font = pygame.font.SysFont(None, 36)
+    def draw(self, surface, WIDTH, HEIGHT):
+        # Create character
         pygame.draw.circle(surface, self.color, self.center, self.radius, self.width)
+        # Create name badge
+        text_surface = self.font.render(self.name, True, (255, 255, 255))
+        text_rect = text_surface.get_rect(center=(self.center[0], self.center[1] - self.radius - 30))
+        background_rect = text_rect.inflate(20, 10)
+        pygame.draw.rect(surface, (200, 200, 200), background_rect, 2, 6)
+        surface.blit(text_surface, text_rect)
+        # Create health bar
+        if self.num == 1:
+            health_rect = pygame.Rect(50, HEIGHT - 90, (WIDTH / 2) - 100, 40)
+        else:
+            health_rect = pygame.Rect((WIDTH / 2) + 50, HEIGHT - 90, (WIDTH / 2) - 100, 40)
+        pygame.draw.rect(surface, (0, 255, 0), health_rect)
+        pygame.draw.rect(surface, (255, 255, 255), health_rect, 3)
 
 # Initializes and returns all items needed for gameplay
 def setup_gameplay_assets(WIDTH, HEIGHT, MID_X, MID_Y, p1_info=None, p2_info=None):
@@ -65,11 +80,13 @@ def setup_gameplay_assets(WIDTH, HEIGHT, MID_X, MID_Y, p1_info=None, p2_info=Non
         if questions_list:
             return random.choice(questions_list)
         return None
+    assets["get_new_question"] = get_new_question
+    assets["current_question"] = get_new_question(assets["current_level"])
     # Returns assets
     return assets
 
 # Handles gameplay visuals
-def draw_gameplay(screen, assets):
+def draw_gameplay(screen, assets, WIDTH, HEIGHT):
     screen.fill((30, 30, 35))
     # Player zones
     pygame.draw.rect(screen, (70, 70, 75), (0, 0, assets["MID_X"], assets["HEIGHT"] - 120))
@@ -77,9 +94,9 @@ def draw_gameplay(screen, assets):
     pygame.draw.line(screen, (100, 100, 110), (assets["MID_X"], 0), (assets["MID_X"], assets["HEIGHT"] - 120), 4)
     # Draw players
     if "p1" in assets:
-        assets["p1"].draw(screen)
+        assets["p1"].draw(screen, WIDTH, HEIGHT)
     if "p2" in assets:
-        assets["p2"].draw(screen)
+        assets["p2"].draw(screen, WIDTH, HEIGHT)
     pygame.display.flip()
 
 # Processes player inputs during gameplay
