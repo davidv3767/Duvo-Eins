@@ -8,3 +8,15 @@ Coming Soon!
 
 ## How do I use Duvo Eins?
 Coming Soon!
+
+### Information:
+Coming Soon!
+
+### Settings:
+Coming Soon!
+
+### Selection:
+Coming Soon!
+
+### Gameplay:
+Coming Soon!

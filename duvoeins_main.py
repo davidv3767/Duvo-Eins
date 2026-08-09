@@ -32,6 +32,8 @@ def main():
     clock = pygame.time.Clock()
     current_state = "menu"
     # Selection trackers
+    p1_level = "K"
+    p2_level = "K"
     p1_name = ""
     p2_name = ""
     active_box = "p1"
@@ -41,16 +43,21 @@ def main():
     # Input from other functions
     screen = init_game()
     menu_assets = duvoeins_menu.setup_menu_assets(WIDTH, HEIGHT, MID_X, MID_Y)
+    settings_assets = duvoeins_settings.setup_settings_assets(WIDTH, HEIGHT, MID_X, MID_Y)
     info_assets = duvoeins_info.setup_info_assets(WIDTH, HEIGHT, MID_X, MID_Y)
     selection1_assets = duvoeins_selection.setup_selection1_assets(WIDTH, HEIGHT, MID_X, MID_Y)
     selection2_assets = duvoeins_selection.setup_selection2_assets(WIDTH, HEIGHT, MID_X, MID_Y)
-    gameplay_assets = duvoeins_gameplay.setup_gameplay_assets(WIDTH, HEIGHT, MID_X, MID_Y, p1_info, p2_info)
+    gameplay_assets = duvoeins_gameplay.setup_gameplay_assets(WIDTH, HEIGHT, MID_X, MID_Y, p1_info, p2_info, p1_level, p2_level)
     # Main game loop
     while current_state != "quit":
         if current_state == "menu":
             duvoeins_menu.draw_menu(screen, menu_assets)
             current_state = duvoeins_menu.handle_menu_events(menu_assets)
-        # 2nd selection screen    
+        # Settings screen
+        elif current_state == "settings":
+            duvoeins_settings.draw_settings(screen, settings_assets, p1_level, p2_level)
+            current_state, p1_level, p2_level = duvoeins_settings.handle_settings_events(p1_level, p2_level)
+        # Info screen  
         elif current_state == "info":
             duvoeins_info.draw_info(screen, info_assets)
             current_state = duvoeins_info.handle_info_events()
@@ -66,7 +73,7 @@ def main():
             current_state, selection2_assets, selection2_key_pressed, p1_info, p2_info = duvoeins_selection.handle_selection2_events(selection2_assets, selection2_key_pressed, p1_info, p2_info)
         # Gameplay screen
         elif current_state == "gameplay":
-            gameplay_assets = duvoeins_gameplay.setup_gameplay_assets(WIDTH, HEIGHT, MID_X, MID_Y, p1_info, p2_info)
+            gameplay_assets = duvoeins_gameplay.setup_gameplay_assets(WIDTH, HEIGHT, MID_X, MID_Y, p1_info, p2_info, p1_level, p2_level)
             duvoeins_gameplay.draw_gameplay(screen, gameplay_assets, WIDTH, HEIGHT)
             current_state = duvoeins_gameplay.handle_gameplay_events()
         # Limit tick rate to 60 fps

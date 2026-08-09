@@ -42,7 +42,7 @@ class Character:
         pygame.draw.rect(surface, (255, 255, 255), health_rect, 3)
 
 # Initializes and returns all items needed for gameplay
-def setup_gameplay_assets(WIDTH, HEIGHT, MID_X, MID_Y, p1_info=None, p2_info=None):
+def setup_gameplay_assets(WIDTH, HEIGHT, MID_X, MID_Y, p1_info=None, p2_info=None, p1_level="K", p2_level="K"):
     # Setup assets
     assets = {}
     assets["current_level"] = 1
@@ -81,7 +81,7 @@ def setup_gameplay_assets(WIDTH, HEIGHT, MID_X, MID_Y, p1_info=None, p2_info=Non
             return random.choice(questions_list)
         return None
     assets["get_new_question"] = get_new_question
-    assets["current_question"] = get_new_question(assets["current_level"])
+    assets["p1_question"] = get_new_question(p1_level)
     # Returns assets
     return assets
 
@@ -97,6 +97,18 @@ def draw_gameplay(screen, assets, WIDTH, HEIGHT):
         assets["p1"].draw(screen, WIDTH, HEIGHT)
     if "p2" in assets:
         assets["p2"].draw(screen, WIDTH, HEIGHT)
+    # Draw layers
+    p1_question = assets.get("p1_question")
+    if p1_question:
+        question_font = pygame.font.SysFont(None, 32)
+        choice_font = pygame.font.SysFont(None, 28)
+        question_surface = question_font.render(p1_question["question"], True, (255, 255, 255))
+        screen.blit(question_surface, (30, 40))
+        for index, choice_text in enumerate(p1_question["choices"]):
+            text = f"{index + 1}. {choice_text}"
+            choice_surface = choice_font.render(text, True, (255, 255, 255))
+            screen.blit(choice_surface, (30, 90 + (index * 35)))
+    # Needed command
     pygame.display.flip()
 
 # Processes player inputs during gameplay
