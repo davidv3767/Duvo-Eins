@@ -1,125 +1,250 @@
 {
     "K": [
         {
-            "question": "Count the lines: | | | |. How many are there?",
+            "question": "Count the lines: | | | |",
             "choices": ["2", "4", "5", "3"],
             "answer": "2"
         },
         {
-            "question": "Which shape has 3 sides and 3 corners?",
+            "question": "Which shape has 3 sides?",
             "choices": ["circle", "square", "triangle", "rectangle"],
             "answer": "3"
         },
         {
-            "question": "Which shape has 4 sides and 4 corners?",
-            "choices": ["circle", "pentagon", "triangle", "rectangle"],
+            "question": "Which shape has 4 equal sides?",
+            "choices": ["circle", "pentagon", "triangle", "square"],
             "answer": "4"
+        },
+        {
+            "question": "Which shape is round like a ball?",
+            "choices": ["circle", "pentagon", "triangle", "rectangle"],
+            "answer": "1"
+        },
+        {
+            "question": "Count the lines: | |",
+            "choices": ["2", "7", "1", "4"],
+            "answer": "1"
+        },
+        {
+            "question": "What number comes after 7?",
+            "choices": ["6", "8", "9", "10"],
+            "answer": "2"
+        },
+        {
+            "question": "What number comes after 5?",
+            "choices": ["3", "4", "6", "7"],
+            "answer": "3"
+        },
+        {
+            "question": "Which number is the largest?",
+            "choices": ["1", "5", "9", "3"],
+            "answer": "3"
+        },
+        {
+            "question": "How many fingers on one hand?",
+            "choices": ["3", "5", "10", "4"],
+            "answer": "2"
         }
     ],
     "1": [
         {
             "question": "What is 7 + 5?",
-            "choices": ["11", "13", "10", "12"],
-            "answer": "4"
+            "choices": ["10", "11", "12", "13"],
+            "answer": "3"
         },
         {
-            "question": "What number comes next in the pattern? 5, 10, 15, 20, ___",
-            "choices": ["21", "25", "30", "22"],
+            "question": "What is 14 - 6?",
+            "choices": ["8", "7", "9", "6"],
+            "answer": "1"
+        },
+        {
+            "question": "What is 9 + 8?",
+            "choices": ["16", "17", "18", "15"],
             "answer": "2"
+        },
+        {
+            "question": "What is 20 - 5?",
+            "choices": ["10", "12", "15", "14"],
+            "answer": "3"
+        },
+        {
+            "question": "What is 10 + 10?",
+            "choices": ["20", "15", "30", "25"],
+            "answer": "1"
+        },
+        {
+            "question": "What is 15 - 7?",
+            "choices": ["6", "7", "8", "9"],
+            "answer": "3"
+        },
+        {
+            "question": "What is 6 + 6?",
+            "choices": ["10", "11", "12", "14"],
+            "answer": "3"
+        },
+        {
+            "question": "What is 18 - 9?",
+            "choices": ["8", "9", "10", "7"],
+            "answer": "2"
+        },
+        {
+            "question": "Which number is even?",
+            "choices": ["3", "5", "8", "9"],
+            "answer": "3"
         }
     ],
     "2": [
         {
-            "question": "What is the value of 3 dimes and 2 nickels?",
-            "choices": ["40 cents", "35 cents", "50 cents", "45 cents"],
+            "question": "What is 35 + 24?",
+            "choices": ["58", "59", "60", "57"],
+            "answer": "2"
+        },
+        {
+            "question": "What is 82 - 19?",
+            "choices": ["63", "65", "61", "73"],
             "answer": "1"
         },
         {
-            "question": "Which number has a 5 in the tens place?",
-            "choices": ["523", "358", "235", "500"],
+            "question": "What is 47 + 38?",
+            "choices": ["84", "85", "86", "75"],
+            "answer": "2"
+        },
+        {
+            "question": "What is 100 - 45?",
+            "choices": ["50", "65", "55", "45"],
+            "answer": "3"
+        },
+        {
+            "question": "What is 64 + 28?",
+            "choices": ["92", "82", "94", "90"],
+            "answer": "1"
+        },
+        {
+            "question": "What is 90 - 36?",
+            "choices": ["52", "54", "64", "56"],
+            "answer": "2"
+        },
+        {
+            "question": "How many minutes in 1 hour?",
+            "choices": ["30", "50", "60", "100"],
+            "answer": "3"
+        },
+        {
+            "question": "What is 53 + 27?",
+            "choices": ["70", "80", "83", "77"],
             "answer": "2"
         }
     ],
     "3": [
         {
-            "question": "What is 6 times 8?",
-            "choices": ["42", "54", "48", "36"],
-            "answer": "3" 
+            "question": "What is 6 x 7?",
+            "choices": ["42", "36", "48", "40"],
+            "answer": "1"
         },
         {
-            "question": "What fraction of the circle is shaded if it is split into 4 equal parts and 1 part is colored in?",
-            "choices": ["1/4", "1/2", "3/4", "4/1"],
-            "answer": "1" 
+            "question": "What is 56 / 8?",
+            "choices": ["6", "7", "8", "9"],
+            "answer": "2"
         },
         {
-            "question": "What is 3 times 5?",
-            "choices": ["23", "63", "18", "15"],
-            "answer": "4" 
+            "question": "What is 9 x 4?",
+            "choices": ["32", "36", "40", "38"],
+            "answer": "2"
+        },
+        {
+            "question": "What is 81 / 9?",
+            "choices": ["8", "9", "7", "10"],
+            "answer": "2"
         }
     ],
     "4": [
         {
-            "question": "Which of these numbers is a prime number?",
-            "choices": ["9", "15", "11", "21"],
-            "answer": "3" 
+            "question": "Which fraction is equal to 1/2?",
+            "choices": ["2/3", "4/8", "3/5", "1/4"],
+            "answer": "2"
         },
         {
-            "question": "Find the perimeter of a rectangle with a length of 8 cm and a width of 5 cm.",
-            "choices": ["40 cm", "26 cm", "13 cm", "20 cm"],
-            "answer": "1"  
+            "question": "Perimeter of a 5x3 rectangle:",
+            "choices": ["15", "16", "18", "12"],
+            "answer": "2"
+        },
+        {
+            "question": "Area of a 6x4 rectangle:",
+            "choices": ["20", "24", "10", "28"],
+            "answer": "2"
         }
     ],
     "5": [
         {
-            "question": "What is 3.5 * 4?",
-            "choices": ["12.5", "14.0", "15.2", "16.0"],
-            "answer": "3"  
+            "question": "Evaluate: 2.5 x 4",
+            "choices": ["8.0", "10.0", "9.5", "12.0"],
+            "answer": "2"
         },
         {
-            "question": "Solve: 1/2 + 1/4",
+            "question": "Simplify: 1/4 + 2/4",
             "choices": ["2/6", "2/4", "3/4", "1/8"],
-            "answer": "3" 
+            "answer": "3"
+        },
+        {
+            "question": "Simplify: 1/2 + 1/3",
+            "choices": ["2/5", "5/6", "2/6", "3/5"],
+            "answer": "2"
         }
     ],
     "6": [
         {
-            "question": "What is the ratio of apples to bananas if there are 6 apples and 9 bananas in simplest form?",
+            "question": "Ratio 6 to 9 in simplest form:",
             "choices": ["2:3", "3:2", "6:9", "1:3"],
-            "answer": "1"  
+            "answer": "1"
         },
         {
-            "question": "Evaulate: 3^3 - (5+2)",
+            "question": "Evaluate: 3^3 - (5+2)",
             "choices": ["2", "16", "22", "20"],
-            "answer": "4" 
+            "answer": "4"
+        },
+        {
+            "question": "Evaluate: 2^4 + 5",
+            "choices": ["13", "21", "11", "16"],
+            "answer": "2"
         }
     ],
     "7": [
         {
-            "question": "A jacket costs $40. It is on sale for 20% off. What is the sale price?",
+            "question": "Sale price of $40 jacket at 20% off:",
             "choices": ["$8", "$32", "$30", "$36"],
-            "answer": "2"  
+            "answer": "2"
         },
         {
             "question": "Solve for x: 3x - 7 = 14",
             "choices": ["x = 7", "x = 3", "x = 21", "x = 6"],
-            "answer": "1" 
+            "answer": "1"
         },
         {
             "question": "Solve for y: 14y - 1 = 13",
-            "choices": ["y = 1", "y = 2", "y = 3", "y = 4"],
+            "choices": ["y = 1", "y = 2", "y = 0", "y = 14"],
             "answer": "1"
+        },
+        {
+            "question": "Solve for x: 2x + 5 = 15",
+            "choices": ["x = 10", "x = 5", "x = 6", "x = 4"],
+            "answer": "2"
         }
     ],
     "8": [
         {
-            "question": "What is the value of sqrt(64)?",
-            "choices": ["6", "7", "8", "9"],
-            "answer": "3"  
+            "question": "Triangle legs 6cm & 8cm. Find hypotenuse:",
+            "choices": ["10 cm", "14 cm", "12 cm", "100 cm"],
+            "answer": "1"
         },
         {
-            "question": "According to the Pythagorean theorem, if a right triangle has legs of length 3 cm and 4 cm, what is the length of the hypotenuse?",
-            "choices": ["5 cm", "7 cm", "12 cm", "25 cm"],
-            "answer": "1" 
+            "question": "Find slope between (2,3) & (4,7):",
+            "choices": ["1", "2", "3", "4"],
+            "answer": "2"
+        },
+        {
+            "question": "Value of sqrt(144):",
+            "choices": ["11", "12", "13", "14"],
+            "answer": "2"
         }
     ]
 }

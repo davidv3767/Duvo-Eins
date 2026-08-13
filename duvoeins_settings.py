@@ -19,7 +19,7 @@ def setup_settings_assets(WIDTH, HEIGHT, MID_X, MID_Y):
     assets["title_surface"] = assets["title_font"].render("Difficulty Settings", True, (255, 255, 255))
     assets["title_rect"] = assets["title_surface"].get_rect(center=(MID_X, HEIGHT / 6))
     # Instructions Setup
-    assets["info_surface"] = assets["info_font"].render("P1: W/S to adjust | P2: I/K to adjust | Press ENTER to save", True, (200, 200, 200))
+    assets["info_surface"] = assets["info_font"].render("P1: W/S to adjust | P2: I/K to adjust", True, (200, 200, 200))
     assets["info_rect"] = assets["info_surface"].get_rect(center=(MID_X, HEIGHT - 80))
     # Returns assets
     return assets

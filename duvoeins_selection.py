@@ -249,5 +249,6 @@ def handle_selection2_events(assets, PRESSED_KEY, p1_info, p2_info):
                             p2_info[1] = "blue"
                         p2_info[2] = True
                         return "gameplay", assets, None, p1_info, p2_info
+            PRESSED_KEY = None
     # Return default for 2nd selections screen
     return "selection2", assets, None, p1_info, p2_info

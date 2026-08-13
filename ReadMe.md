@@ -20,3 +20,6 @@ Coming Soon!
 
 ### Gameplay:
 Coming Soon!
+
+### Endgame:
+Coming Soon!

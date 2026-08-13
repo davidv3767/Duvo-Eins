@@ -3,10 +3,11 @@ import sys
 
 # Import our custom modular state screens
 import duvoeins_menu
+import duvoeins_settings
 import duvoeins_info
 import duvoeins_selection
 import duvoeins_gameplay
-import duvoeins_settings
+import duvoeins_endgame
 
 # Global constants (Populated dynamically during runtime)
 WIDTH, HEIGHT = 0, 0
@@ -31,7 +32,7 @@ def main():
     # Setup clock & current state
     clock = pygame.time.Clock()
     current_state = "menu"
-    # Selection trackers
+    # Selection variables & other trackers
     p1_level = "K"
     p2_level = "K"
     p1_name = ""
@@ -73,9 +74,12 @@ def main():
             current_state, selection2_assets, selection2_key_pressed, p1_info, p2_info = duvoeins_selection.handle_selection2_events(selection2_assets, selection2_key_pressed, p1_info, p2_info)
         # Gameplay screen
         elif current_state == "gameplay":
-            gameplay_assets = duvoeins_gameplay.setup_gameplay_assets(WIDTH, HEIGHT, MID_X, MID_Y, p1_info, p2_info, p1_level, p2_level)
+            if gameplay_assets["second_datasync_done"] == False: 
+                gameplay_assets = duvoeins_gameplay.setup_gameplay_assets(WIDTH, HEIGHT, MID_X, MID_Y, p1_info, p2_info, p1_level, p2_level)
             duvoeins_gameplay.draw_gameplay(screen, gameplay_assets, WIDTH, HEIGHT)
-            current_state = duvoeins_gameplay.handle_gameplay_events()
+            current_state, gameplay_assets = duvoeins_gameplay.handle_gameplay_events(gameplay_assets)
+        elif current_state == "endgame":
+            print("Welcome to the endgame... which is an endgame!")
         # Limit tick rate to 60 fps
         clock.tick(60)
     # Ending mechanic
