@@ -41,6 +41,7 @@ def main():
     selection2_key_pressed = None
     p1_info = [p1_name, None, False]
     p2_info = [p2_name, None, False]
+    endgame_intialized = False
     # Input from other functions
     screen = init_game()
     menu_assets = duvoeins_menu.setup_menu_assets(WIDTH, HEIGHT, MID_X, MID_Y)
@@ -49,9 +50,16 @@ def main():
     selection1_assets = duvoeins_selection.setup_selection1_assets(WIDTH, HEIGHT, MID_X, MID_Y)
     selection2_assets = duvoeins_selection.setup_selection2_assets(WIDTH, HEIGHT, MID_X, MID_Y)
     gameplay_assets = duvoeins_gameplay.setup_gameplay_assets(WIDTH, HEIGHT, MID_X, MID_Y, p1_info, p2_info, p1_level, p2_level)
+    endgame_assets = {}
     # Main game loop
     while current_state != "quit":
         if current_state == "menu":
+            selection2_assets = duvoeins_selection.setup_selection2_assets(WIDTH, HEIGHT, MID_X, MID_Y)
+            p1_info = ["", "default", False]
+            p2_info = ["", "default", False]
+            p1_name = ""
+            p2_name = ""
+            endgame_initialized = False  # Reset endgame flag
             duvoeins_menu.draw_menu(screen, menu_assets)
             current_state = duvoeins_menu.handle_menu_events(menu_assets)
         # Settings screen
@@ -78,8 +86,13 @@ def main():
                 gameplay_assets = duvoeins_gameplay.setup_gameplay_assets(WIDTH, HEIGHT, MID_X, MID_Y, p1_info, p2_info, p1_level, p2_level)
             duvoeins_gameplay.draw_gameplay(screen, gameplay_assets, WIDTH, HEIGHT)
             current_state, gameplay_assets = duvoeins_gameplay.handle_gameplay_events(gameplay_assets)
+        # Endgame screen
         elif current_state == "endgame":
-            print("Welcome to the endgame... which is an endgame!")
+            if endgame_initialized == False:
+                endgame_assets = duvoeins_endgame.setup_endgame_assets(WIDTH, HEIGHT, MID_X, MID_Y, gameplay_assets)
+                endgame_initialized = True
+            duvoeins_endgame.draw_endgame(screen, endgame_assets)
+            current_state = duvoeins_endgame.handle_endgame_events()
         # Limit tick rate to 60 fps
         clock.tick(60)
     # Ending mechanic
