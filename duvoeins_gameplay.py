@@ -28,7 +28,7 @@ P2_KEY_MAP = {
 
 # Defines character class
 class Character:
-    def __init__(self, color, center, radius, playerName, playerNum):
+    def __init__(self, color, center, radius, playerName, playerNum, color_str="default"):
         self.color = color
         self.center = center
         self.radius = radius
@@ -37,6 +37,7 @@ class Character:
         self.width = 0
         self.health = 100
         self.maxHealth = 100
+        self.color_str = color_str
         self.font = pygame.font.SysFont(None, 36)
     def get_health_color(self):
         health_percent = max(0, min(1, self.health / self.maxHealth))
@@ -69,6 +70,23 @@ class Character:
         pygame.draw.rect(surface, dynamic_color, fill_rect)
         pygame.draw.rect(surface, (255, 255, 255), bg_rect, 3)
 
+# Helps for color strengths & weaknesses
+def get_damage_multiplier(attacker_color, defender_color):
+    # Map of strength/weakness relationships
+    type_chart = {
+        "red": {"strong": "yellow", "weak": "blue"},
+        "yellow": {"strong": "green", "weak": "red"},
+        "green": {"strong": "blue", "weak": "yellow"},
+        "blue": {"strong": "red", "weak": "green"}
+    }
+    attacker_rules = type_chart.get(attacker_color)
+    if attacker_rules:
+        if defender_color == attacker_rules["strong"]:
+            return 1.2
+        elif defender_color == attacker_rules["weak"]:
+            return 0.8
+    return 1.0
+
 # Initializes and returns all items needed for gameplay
 def setup_gameplay_assets(WIDTH, HEIGHT, MID_X, MID_Y, p1_info=None, p2_info=None, p1_level="K", p2_level="K"):
     # Setup assets
@@ -88,8 +106,8 @@ def setup_gameplay_assets(WIDTH, HEIGHT, MID_X, MID_Y, p1_info=None, p2_info=Non
     P1_NAME = p1_info[0] if p1_info and p1_info[0] else "Player 1"
     P2_NAME = p2_info[0] if p2_info and p2_info[0] else "Player 2"
     # Setup player characters
-    player1 = Character(P1_COLOR, (200, HEIGHT - 220), 100, P1_NAME, 1)
-    player2 = Character(P2_COLOR, (WIDTH - 200, HEIGHT - 220), 100, P2_NAME, 2)
+    player1 = Character(P1_COLOR, (200, HEIGHT - 220), 100, P1_NAME, 1, P1_COLOR_STR)
+    player2 = Character(P2_COLOR, (WIDTH - 200, HEIGHT - 220), 100, P2_NAME, 2, P2_COLOR_STR)
     assets["p1"] = player1
     assets["p2"] = player2
     assets["p1_level"] = p1_level
@@ -100,7 +118,32 @@ def setup_gameplay_assets(WIDTH, HEIGHT, MID_X, MID_Y, p1_info=None, p2_info=Non
             assets["level_questions"] = json.load(file)
     except FileNotFoundError:
         print("Error: The file 'providedquestions.json' is not found.")
-        assets["level_questions"] = {}
+        assets["level_questions"] = {
+            "K": [
+                {
+                    "question": "What number comes after 5?",
+                    "choices": ["3", "4", "6", "7"],
+                    "answer": "3"
+                },
+                {
+                    "question": "How many fingers on one hand?",
+                    "choices": ["3", "5", "10", "4"],
+                    "answer": "2"
+                }
+            ],
+            "1": [
+                {
+                    "question": "What is 7 + 5?",
+                    "choices": ["10", "11", "12", "13"],
+                    "answer": "3"
+                },
+                {
+                    "question": "What is 10 + 10?",
+                    "choices": ["20", "15", "30", "25"],
+                    "answer": "1"
+                }
+            ]
+        }
     # Function to pick questions
     def get_new_question(level):
         lvl_str = str(level)
@@ -214,7 +257,9 @@ def handle_gameplay_events(assets):
                         assets["p2_shields"] -= 1
                         print("Player 1 broke 1 of Player 2's shields!")
                     else:
-                        assets["p2"].health -= 10
+                        multiplier = get_damage_multiplier(assets["p1"].color_str, assets["p2"].color_str)
+                        damage = 10 * multiplier
+                        assets["p2"].health -= damage
                         if assets["p2"].health <= 0:
                             assets["winner_name"] = assets["p1"].name
                             return "endgame", assets
@@ -250,7 +295,9 @@ def handle_gameplay_events(assets):
                         assets["p1_shields"] -= 1
                         print("Player 2 broke 1 of Player 1's shields!")
                     else:
-                        assets["p1"].health -= 10
+                        multiplier = get_damage_multiplier(assets["p2"].color_str, assets["p1"].color_str)
+                        damage = 10 * multiplier
+                        assets["p1"].health -= damage
                         if assets["p1"].health <= 0:
                             assets["winner_name"] = assets["p2"].name
                             return "endgame", assets

@@ -12,13 +12,19 @@ class Line:
 
 # Defines static circle class
 class StaticCircle:
-    def __init__(self, center, radius, color, width=0):
+    def __init__(self, center, radius, color, label="", width=0):
         self.center = center
         self.radius = radius
-        self.color = color 
+        self.color = color
+        self.label = label
         self.width = width
+        self.font = pygame.font.SysFont(None, 80)
     def draw(self, surface):
         pygame.draw.circle(surface, self.color, self.center, self.radius, self.width)
+        if self.label:
+            text_surface = self.font.render(self.label, True, (255, 255, 255))
+            text_rect = text_surface.get_rect(center=self.center)
+            surface.blit(text_surface, text_rect)
 
 # Initializes and returns all items needed for first selection screen
 def setup_selection1_assets(WIDTH, HEIGHT, MID_X, MID_Y):
@@ -126,10 +132,10 @@ def setup_selection2_assets(WIDTH, HEIGHT, MID_X, MID_Y):
     ]
     # Initialize circles
     assets['circles'] = [
-        StaticCircle((WIDTH / 4 - GRID_SIZE / 4, MID_Y - GRID_SIZE / 4), 100, (215, 25, 28)),
-        StaticCircle((WIDTH / 4 + GRID_SIZE / 4, MID_Y - GRID_SIZE / 4), 100, (245, 210, 0)),
-        StaticCircle((WIDTH / 4 - GRID_SIZE / 4, MID_Y + GRID_SIZE / 4), 100, (0, 130, 80)),
-        StaticCircle((WIDTH / 4 + GRID_SIZE / 4, MID_Y + GRID_SIZE / 4), 100, (15, 85, 215))
+        StaticCircle((WIDTH / 4 - GRID_SIZE / 4, MID_Y - GRID_SIZE / 4), 100, (215, 25, 28), label="1"),
+        StaticCircle((WIDTH / 4 + GRID_SIZE / 4, MID_Y - GRID_SIZE / 4), 100, (245, 210, 0), label="2"),
+        StaticCircle((WIDTH / 4 - GRID_SIZE / 4, MID_Y + GRID_SIZE / 4), 100, (0, 130, 80), label="3"),
+        StaticCircle((WIDTH / 4 + GRID_SIZE / 4, MID_Y + GRID_SIZE / 4), 100, (15, 85, 215), label="4")
     ]
     # Initialize stats graphic
     assets['stats_background'] = pygame.Rect(MID_X + BORDER_PAD, HEIGHT / 4, MID_X - (2 * BORDER_PAD), MID_Y)

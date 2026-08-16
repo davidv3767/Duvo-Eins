@@ -10,7 +10,7 @@ def setup_info_assets(WIDTH, HEIGHT, MID_X, MID_Y):
     assets['title_rect'] = assets['title_surface'].get_rect(center=(MID_X, HEIGHT / 4))
     # Version & Credits Setup
     version_font = pygame.font.SysFont(None, 75)
-    assets['version_surface'] = version_font.render("Version: 0.4.0", True, (255, 255, 255))
+    assets['version_surface'] = version_font.render("Version: 2P.0.5.0", True, (255, 255, 255))
     assets['version_rect'] = assets['version_surface'].get_rect(center=(WIDTH / 4, MID_Y))
     maindev_font = pygame.font.SysFont(None, 75)
     assets['maindev_surface'] = maindev_font.render("Made by David Vuddandam ", True, (255, 255, 255))
